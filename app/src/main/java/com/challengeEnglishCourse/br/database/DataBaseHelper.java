@@ -30,8 +30,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE aula("+
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "nome TEXT,"+
-                "data TEXT)");
+                "nome_Aula TEXT,"+
+                "data TEXT,"+
+                "descricao_Aula TEXT)");
     }
 
     @Override

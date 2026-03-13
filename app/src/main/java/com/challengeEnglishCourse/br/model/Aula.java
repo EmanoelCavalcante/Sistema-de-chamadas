@@ -4,8 +4,9 @@ import java.time.LocalDate;
 
 public class Aula {
     private int id;
-    private String aula;
+    private String nomeAula;
     private String data;
+    private String descricaoAula;
 
     public int getId() {
         return id;
@@ -15,11 +16,11 @@ public class Aula {
         this.id = id;
     }
 
-    public String getAula() {
+    public String getNomeAula() {
         return aula;
     }
 
-    public void setAula(String aula) {
+    public void setNomeAula(String aula) {
         this.aula = aula;
     }
 
@@ -29,5 +30,13 @@ public class Aula {
 
     public void setData(String data) {
         this.data = data;
+    }
+    
+    public void setDescricaoAula(String descricaoAula){
+      this.descricaoAula = descricaoAula;
+    }
+    
+    public String getDescricaoAula(){
+      return descricaoAula;
     }
 }

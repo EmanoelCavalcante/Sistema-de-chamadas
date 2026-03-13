@@ -16,8 +16,8 @@ O sistema permite registrar, consultar e controlar a frequência dos alunos de f
 ## Tecnologias utilizadas
 
 - Java
-- JDBC
-- MySQL
+- Android Studio
+- SQLite
 - Padrão DAO
 - Programação orientada a objetos
 
@@ -27,8 +27,9 @@ O projeto segue uma arquitetura organizada em camadas:
 
 - **model** → entidades do sistema
 - **dao** → acesso ao banco de dados
-- **service** → regras de negócio
-- **controller** → controle das operações
+- **ui**→ controlar as interfaces presentes
+- **repository** → centralizar o acesso ao banco
+
 
 ## Status do projeto
 - Em desenvolvimento
