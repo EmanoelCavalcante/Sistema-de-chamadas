@@ -10,13 +10,28 @@ import com.challengeEnglishCourse.br.model.Aluno;
 import com.challengeEnglishCourse.br.database.DataBaseHelper;
 
 
-public class AlunoDAO {
+public class AlunoDAO extends BaseDAO {
     private DataBaseHelper dbHelper;
     private SQLiteDatabase db;
 
     public AlunoDAO(Context context){
-        dbHelper = new DataBaseHelper(context);
-        db = dbHelper.getWritableDatabase();
+        super(context);
+    }
+    private Aluno cursorParaAluno(Cursor cursor){
+        Aluno aluno = new Aluno();
+
+        aluno.setNome(
+                cursor.getString(cursor.getColumnIndexOrThrow("nome")));
+
+        aluno.setId(
+                cursor.getInt(cursor.getColumnIndexOrThrow("id")
+                ));
+
+        aluno.setMatricula(
+                cursor.getString(cursor.getColumnIndexOrThrow("matricula")
+                ));
+
+        return aluno;
     }
 
     public long inserirAlunos(Aluno aluno){
@@ -29,33 +44,44 @@ public class AlunoDAO {
 
     public List<Aluno> buscarAlunoPorMatricula(String matricula){
       List <Aluno> alunos = new  ArrayList<>();
+      Cursor cursor = null;
       try{
-        Cursor cursor = db.rawQuery(
-          "SELECT * FROM aluno WHERE matricula=?", new String[]{matricula}
+        cursor = db.rawQuery(
+
+          "SELECT * FROM aluno WHERE matricula=? ", new String[]{matricula}
         );
-      }
-        
-        while (cursor.moveToNext()){
-          Aluno aluno = new Aluno();
-          
-          aluno.setNome(
-            cursor.getString(cursor.getColumnIndexOrThrow("nome")));
-            
-          aluno.setId(
-            cursor.getInt(cursor.getColumnIndexOrThrow("id")
-            ));
-            
-            aluno.setMatricula(
-              cursor.getString(cursor.getColumnIndexOrThrow("matricula")
-              ));
-          alunos.add(aluno);
+
+            if (cursor != null && cursor.moveToFirst()){
+                do{
+
+                   alunos.add(cursorParaAluno(cursor));
+
+                } while(cursor.moveToNext());
+            }
         }
         finally{
           if(cursor != null){
             cursor.close();
           }
-        }
-        return alunos;
       }
+      return alunos;
+    }
+
+    public int atualizarAluno(Aluno aluno){
+        ContentValues values = new ContentValues();
+
+        values.put("nome", aluno.getNome());
+        values.put("matricula", aluno.getMatricula());
+
+        return db.update("aluno",
+                values,
+                "id = ?",
+                new String[]{String.valueOf(aluno.getId())});
+    }
+
+    public int deletarAluno(int id){
+        return db.delete("aluno",
+                "id = ?",
+                new String[]{String.valueOf(id)});
     }
 }

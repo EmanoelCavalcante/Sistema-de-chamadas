@@ -6,17 +6,31 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.List;
 import java.util.ArrayList;
+
+import com.challengeEnglishCourse.br.DTO.ChamadaAlunoDTO;
 import com.challengeEnglishCourse.br.model.Presenca;
 import com.challengeEnglishCourse.br.database.DataBaseHelper;
 
-public class PresencaDAO {
+public class PresencaDAO extends BaseDAO{
   private DataBaseHelper dbHelper;
   private SQLiteDatabase db;
   public PresencaDAO(Context context){
-    dbHelper = new DataBaseHelper(context);
-    db = dbHelper.getWritableDatabase();
+    super(context);
   }
-  
+
+    private ChamadaAlunoDTO cursorParaPresenca(Cursor cursor){
+        ChamadaAlunoDTO dto = new ChamadaAlunoDTO();
+
+        dto.setMatricula(cursor.getString(cursor.getColumnIndexOrThrow("matricula")));
+        dto.setNome(cursor.getString(cursor.getColumnIndexOrThrow("nome")));
+
+        boolean presenca =
+                cursor.getInt(cursor.getColumnIndexOrThrow("presenca")) == 1;
+        dto.setPresenca(presenca);
+
+        return dto;
+    }
+
   public long inserirPresenca(Presenca presenca){
     ContentValues values = new ContentValues();
     
@@ -27,38 +41,54 @@ public class PresencaDAO {
    return db.insert("presenca", null, values);
   }
   
-  public List<Presenca> listarPresencas(int aulaId){
-    List<Presenca> presencas = new ArrayList<>();
+  public List<ChamadaAlunoDTO> listarPresencas(int aulaId){
+    List<ChamadaAlunoDTO> chamadas = new ArrayList<>();
     
     Cursor cursor = null;
     try{
       cursor = db.rawQuery(
-        "SELECT aluno.nome, presenca.presenca" +
-        "FROM presenca" +
-        "LEFT JOIN aluno ON presenca.aluno_Id = aluno.id"+
-        "WHERE presenca.aula_Id = ?",
-        new String[]{String.valueOf(aulaId)}
+        "SELECT aluno.nome, aluno.matricula, presenca.presenca " +
+        "FROM presenca " +
+        "LEFT JOIN aluno ON presenca.aluno_Id = aluno.id " +
+        "WHERE presenca.aula_Id = ? ",
+         new String[]{String.valueOf(aulaId)}
         );
+
+      if (cursor != null && cursor.moveToFirst()){
+          do{
+            chamadas.add(cursorParaPresenca(cursor));
+          }
+          while(cursor.moveToNext());
+      }
     }
-    while (cursor.moveToNext()){
-      Presenca presenca = new Presenca();
-      
-      presenca.setAulaId(cursor.getInt(cursor.getColumnIndexOrThrow("aula_Id")));
-      
-      presenca.setAlunoId(cursor.getInt(cursor.getColumnIndexOrThrow("aluno_id")));
-      
-      boolean presente = cursor.getInt(cursor.getColumnIndexOrThrow("presenca")) == 1;
-      
-      presenca.isPresenca(presente);
-      
-      presencas.add(presenca);
-    }
-    
     finally{
       if(cursor != null){
         cursor.close();
       }
     }
-    return presencas;
+    return chamadas;
+  }
+
+  public long atualizarPresenca(Presenca presenca){
+      ContentValues values = new ContentValues();
+
+      values.put("presenca", presenca.isPresenca() ? 1 : 0);
+
+      return db.update("presenca",
+              values, "aluno_Id = ? AND aula_Id = ?",
+              new String[]{String.valueOf(presenca.getAlunoId()),
+              String.valueOf(presenca.getAulaId())});
+  }
+
+  public int deletePresenca(int aulaId, int alunoId){
+
+      return db.delete(
+              "presenca",
+              "aula_Id = ? AND aluno_Id = ?",
+              new String[]{
+                      String.valueOf(aulaId),
+                      String.valueOf(alunoId)
+              }
+      );
   }
 }

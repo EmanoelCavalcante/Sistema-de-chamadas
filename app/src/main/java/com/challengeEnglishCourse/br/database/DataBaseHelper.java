@@ -16,7 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onConfigure(SQLiteDataBase db){
+    public void onConfigure(SQLiteDatabase db){
       super.onConfigure(db);
       db.setForeignKeyConstraintsEnabled(true);
     }
@@ -30,13 +30,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE presenca (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-        "aluno_id INTEGER, " +
-        "aula_id INTEGER, " +
+        "aluno_Id INTEGER, " +
+        "aula_Id INTEGER, " +
         "presenca INTEGER, " +
         
-        "FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE, " +
-        "FOREIGN KEY (aula_id) REFERENCES aula(id) ON DELETE CASCADE" +
-        ");");
+        "FOREIGN KEY (aluno_Id) REFERENCES aluno(id) ON DELETE CASCADE, " +
+        "FOREIGN KEY (aula_Id) REFERENCES aula(id) ON DELETE CASCADE, " +
+
+         "UNIQUE(aula_Id, aluno_Id)," +
+
+         ");");
 
         db.execSQL("CREATE TABLE aula("+
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"+

@@ -17,11 +17,11 @@ public class Aula {
     }
 
     public String getNomeAula() {
-        return aula;
+        return nomeAula;
     }
 
     public void setNomeAula(String aula) {
-        this.aula = aula;
+        this.nomeAula = aula;
     }
 
     public String getData() {

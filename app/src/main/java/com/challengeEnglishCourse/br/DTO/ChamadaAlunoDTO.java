@@ -1,19 +1,19 @@
-package com.challengeEnglishCourse.br.DTO
+package com.challengeEnglishCourse.br.DTO;
 
-public class ChamadaAluno{
-  private int alunoId;
+public class ChamadaAlunoDTO{
+  private String matricula;
   private boolean presenca;
   private String nome;
-  
-  public int getAlunoId(){
-    return alunoId;
-  }
-  
-  public void setAlunoId(int alunoId){
-    this alunoId = alunoId;
-  }
-  
-  public boolean getPresenca(){
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public boolean getPresenca(){
     return presenca;
   }
   

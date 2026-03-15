@@ -9,15 +9,25 @@ import java.util.ArrayList;
 import com.challengeEnglishCourse.br.model.Aula;
 
 import com.challengeEnglishCourse.br.database.DataBaseHelper;
-public class AulaDAO {
+public class AulaDAO extends BaseDAO{
   private DataBaseHelper dbHelper;
-  private SQLiteDataBase db;
+  private SQLiteDatabase db;
   
   public AulaDAO(Context context){
-    dbHelper = new DataBaseHelper(context);
-    db = dbHelper.getWritableDatabase();
+    super(context);
   }
-  
+    private Aula cursorParaAula(Cursor cursor){
+        Aula aula = new Aula();
+
+        aula.setNomeAula(cursor.getString(cursor.getColumnIndexOrThrow("nome_Aula")));
+
+        aula.setData(cursor.getString(cursor.getColumnIndexOrThrow("data")));
+
+        aula.setDescricaoAula(cursor.getString(cursor.getColumnIndexOrThrow("descricao_Aula")));
+
+        return aula;
+    }
+
   public long inserirAula(Aula aula){
     ContentValues values = new ContentValues();
     values.put("nome_Aula", aula.getNomeAula());
@@ -27,31 +37,48 @@ public class AulaDAO {
     return db.insert("aula", null, values);
   }
   
-  public List<Aulas> listarAulas(){
-    List<Aulas> aulas = new ArrayList<>();
+  public List<Aula> listarAulas(){
+    List<Aula> aulas = new ArrayList<>();
+    Cursor cursor = null;
     
-    try{
-      Cursor cursor = db.rawQuery(
-        "SELECT * FROM aula", null);
-    }
-    
-    while(cursor.moveToNext()){
-      Aula aula = new Aula();
-      
-      aula.setNomeAula(cursor.getString(cursor.getColumnIndexOrThrow("nome_Aula")));
-      
-      aula.setData(cursor.getString(cursor.getColumnIndexOtThrow("data")));
-      
-      aula.setDescricaoAula(cursor.getString(cursor.getColumnIndexOrThrow("descricao_Aula")));
-      
-      aulas.add(aula);
+    try {
+        cursor = db.rawQuery(
+                "SELECT * FROM aula ", null);
+        if(cursor != null && cursor.moveToFirst()){
+            do{
+
+                aulas.add(cursorParaAula(cursor));
+
+            } while (cursor.moveToNext());
+        }
     }
     
     finally {
       if(cursor != null){
         cursor.close();
       }
-      return aulas;
     }
+      return aulas;
+  }
+
+  public int atualizarAula(Aula aula){
+      ContentValues values = new ContentValues();
+
+      values.put("nome_Aula", aula.getNomeAula());
+      values.put("descricao_Aula", aula.getDescricaoAula());
+
+      return db.update("aula",
+              values,
+              "id = ?",
+              new String[]{String.valueOf(aula.getId())});
+  }
+
+  public int deletarAula(int aulaId, int alunoId){
+      return db.delete("aula",
+              "aula_Id = ? AND aluno_Id = ?",
+              new String[]{
+                      String.valueOf(aulaId),
+                      String.valueOf(alunoId)
+              });
   }
 }
