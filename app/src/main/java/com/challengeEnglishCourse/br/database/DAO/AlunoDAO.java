@@ -42,6 +42,31 @@ public class AlunoDAO extends BaseDAO {
         return db.insert("aluno", null, values);
     }
 
+    public List<Aluno> listarAlunos(){
+        List<Aluno> alunos = new ArrayList<>();
+        Aluno aluno = new Aluno();
+
+        Cursor cursor = null;
+
+        try{
+            cursor = db.rawQuery(
+                    "SELECT * FROM aluno",
+                    null
+            );
+
+            if(cursor != null && cursor.moveToFirst()){
+                do{
+                    alunos.add(cursorParaAluno(cursor));
+                } while(cursor.moveToNext());
+            }
+        } finally {
+            if(cursor != null){
+                cursor.close();
+            }
+        }
+        return alunos;
+    }
+
     public List<Aluno> buscarAlunoPorMatricula(String matricula){
       List <Aluno> alunos = new  ArrayList<>();
       Cursor cursor = null;
@@ -65,6 +90,31 @@ public class AlunoDAO extends BaseDAO {
           }
       }
       return alunos;
+    }
+
+    public List<Aluno> buscarAlunoPeloNome(String nome){
+        List <Aluno> alunos = new  ArrayList<>();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery(
+
+                    "SELECT * FROM aluno WHERE nome=? ", new String[]{nome}
+            );
+
+            if (cursor != null && cursor.moveToFirst()){
+                do{
+
+                    alunos.add(cursorParaAluno(cursor));
+
+                } while(cursor.moveToNext());
+            }
+        }
+        finally{
+            if(cursor != null){
+                cursor.close();
+            }
+        }
+        return alunos;
     }
 
     public int atualizarAluno(Aluno aluno){
