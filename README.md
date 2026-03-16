@@ -19,7 +19,7 @@ O sistema permite registrar, consultar e controlar a frequência dos alunos de f
 - Java
 - Android Studio
 - SQLite
-- Padrão DAO
+- DAO
 - Git
 - Android SDK
 
@@ -44,7 +44,7 @@ SQLite Database
 ## Roadmap
 - [x] Operações CRUD
 - [x] Cadastro de alunos
-- [x] Registro de presença
+- [x] Registro de presenca
 - [ ] Tratamento de erros
 - [ ] Hisórico de chamadas
 - [ ] Criar interface do aplicativo
