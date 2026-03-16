@@ -34,26 +34,6 @@ DAO
 ↓
 SQLite Database
 
-
-## Arquitetura do projeto
-com.challengeEnglishCourse.br │ 
-├── model 
-│     └── Aluno.java 
-|     └── Aula.java
-|     └── Presenca.java
-│ 
-├── database 
-│       └── DataBaseHelper.java 
-│ 
-├── database/DAO 
-│       └── AlunoDAO.java
-|       └── AulaDAO.java
-|       └── PresencaDAO.java
-|
-└── repository 
-        └── AlunoRepository.java
-
-
 ## Como executar o projeto
 1. Clone o repositório
    git clone https://github.com/EmanoelCavalcante/Sistema-de-chamadas.git
