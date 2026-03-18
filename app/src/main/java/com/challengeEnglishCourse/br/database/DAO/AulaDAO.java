@@ -31,7 +31,7 @@ public class AulaDAO extends BaseDAO{
   public long inserirAula(Aula aula){
     ContentValues values = new ContentValues();
     values.put("nome_Aula", aula.getNomeAula());
-    values.put("data_Aula", aula.getData());
+    values.put("data_Aula", aula.getData().toString());
     values.put("descricao_Aula", aula.getDescricaoAula());
     
     return db.insert("aula", null, values);

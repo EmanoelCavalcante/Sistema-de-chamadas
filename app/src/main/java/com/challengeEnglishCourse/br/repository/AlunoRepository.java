@@ -15,10 +15,19 @@ public class AlunoRepository {
     }
 
     public long registrarAluno(Aluno aluno){
-        return alunoDAO.inserirAlunos(aluno);
+        long id = alunoDAO.inserirAluno(aluno);
+        String matricula = aluno.getMatricula();
+        if(id != -1){
+          aluno.setId(id);
+        }
+      return aluno;
     }
     public List<Aluno> listarAlunos(){
        return alunoDAO.listarAlunos();
+    }
+    
+    public List<Aluno> buscarAlunoPeloNome(String nome){
+      return alunoDAO.buscarAlunoPeloNome(nome);
     }
     public int atualizarAluno(Aluno aluno){
         return alunoDAO.atualizarAluno(aluno);

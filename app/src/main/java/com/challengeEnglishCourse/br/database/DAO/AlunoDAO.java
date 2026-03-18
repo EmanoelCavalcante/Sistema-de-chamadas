@@ -28,7 +28,7 @@ public class AlunoDAO extends BaseDAO {
                 ));
 
         aluno.setMatricula(
-                cursor.getString(cursor.getColumnIndexOrThrow("matricula")
+                cursor.getLong(cursor.getColumnIndexOrThrow("matricula")
                 ));
 
         return aluno;
@@ -37,7 +37,6 @@ public class AlunoDAO extends BaseDAO {
     public long inserirAlunos(Aluno aluno){
         ContentValues values = new ContentValues();
         values.put("nome", aluno.getNome());
-        values.put("matricula", aluno.getMatricula());
 
         return db.insert("aluno", null, values);
     }
@@ -67,7 +66,7 @@ public class AlunoDAO extends BaseDAO {
         return alunos;
     }
 
-    public List<Aluno> buscarAlunoPorMatricula(String matricula){
+    public List<Aluno> buscarAlunoPorMatricula(long matricula){
       List <Aluno> alunos = new  ArrayList<>();
       Cursor cursor = null;
       try{

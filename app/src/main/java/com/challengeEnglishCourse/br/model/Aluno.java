@@ -3,7 +3,7 @@ package com.challengeEnglishCourse.br.model;
 public class Aluno {
     private int id;
     private String nome;
-    private String matricula;
+    private long matricula;
 
     public int getId()
     {return id;}
@@ -20,11 +20,11 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public long getMatricula() {
+        return String.valueOf(2026000 + this.id);
     }
 
-    public void setMatricula(String matricula) {
+    public void setMatricula(long matricula) {
         this.matricula = matricula;
     }
 }
