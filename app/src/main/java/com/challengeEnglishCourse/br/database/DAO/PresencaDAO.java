@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.challengeEnglishCourse.br.DTO.ChamadaAlunoDTO;
+import com.challengeEnglishCourse.br.dto.ChamadaAlunoDTO;
 import com.challengeEnglishCourse.br.model.Presenca;
 import com.challengeEnglishCourse.br.database.DataBaseHelper;
 
@@ -31,7 +31,7 @@ public class PresencaDAO extends BaseDAO{
         return dto;
     }
 
-  public long inserirPresenca(Presenca presenca){
+  public long inserirPresencas(Presenca presenca){
     ContentValues values = new ContentValues();
     
     values.put("aula_Id", presenca.getAulaId());
