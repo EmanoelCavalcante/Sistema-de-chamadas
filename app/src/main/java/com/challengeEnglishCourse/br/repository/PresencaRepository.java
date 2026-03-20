@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 
-import com.challengeEnglishCourse.br.database.DAO.PresencaDAO;
+import com.challengeEnglishCourse.br.database.dao.PresencaDAO;
 import com.challengeEnglishCourse.br.model.Presenca;
 import com.challengeEnglishCourse.br.dto.ChamadaAlunoDTO;
 

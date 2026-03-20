@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 
-import com.challengeEnglishCourse.br.database.DAO.AlunoDAO;
+import com.challengeEnglishCourse.br.database.dao.AlunoDAO;
 import com.challengeEnglishCourse.br.model.Aluno;
 
 public class AlunoRepository {

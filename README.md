@@ -26,13 +26,21 @@ O sistema permite registrar, consultar e controlar a frequência dos alunos de f
 ## Arquitetura do projeto
 
 O projeto segue uma arquitetura organizada em camadas para separação de responsabilidades:
+
 UI
+
+↓
+Service
+
 ↓
 Repository
+
 ↓
 DAO
+
 ↓
 SQLite Database
+
 
 ## Como executar o projeto
 1. Clone o repositório
@@ -43,8 +51,8 @@ SQLite Database
 
 ## Roadmap
 - [x] Operações CRUD
-- [x] Cadastro de alunos
-- [x] Registro de presenca
+- [ ] Cadastro de alunos
+- [ ] Registro de presenca
 - [ ] Tratamento de erros
 - [ ] Hisórico de chamadas
 - [ ] Criar interface do aplicativo

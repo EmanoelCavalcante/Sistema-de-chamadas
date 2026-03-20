@@ -1,4 +1,4 @@
-package com.challengeEnglishCourse.br.database.DAO;
+package com.challengeEnglishCourse.br.database.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

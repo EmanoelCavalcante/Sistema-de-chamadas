@@ -1,4 +1,4 @@
-package com.challengeEnglishCourse.br.database.DAO;
+package com.challengeEnglishCourse.br.database.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
