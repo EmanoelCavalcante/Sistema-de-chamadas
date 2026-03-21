@@ -12,7 +12,34 @@ public class AlunoService{
     this.alunoDAO = alunoDAO;
   }
   
-  public String registrarAluno(String nome){
-    nome = nome.trim();
+  public Aluno registrarAluno(String nome){
+      if(nome == null){
+          throw new RuntimeException("Nome null");
+      }
+
+      nome = nome.trim();
+      nome = nome.replaceAll(" +", " ");
+
+      if(nome.isEmpty()){
+          throw new IllegalArgumentException("Nome vazio!");
+      }
+
+      String nomeComparado = nome.replaceAll("\\s+", "").toLowerCase();
+
+      List<Aluno> alunos = alunoDAO.buscarAlunoPeloNome(nomeComparado);
+      if(!alunos.isEmpty()){
+          throw new RuntimeException("Aluno já cadastrado");
+      }
+
+      Aluno aluno = new Aluno();
+      aluno.setNome(nome);
+      long id = alunoDAO.inserirAluno(aluno);
+      if(id != -1){
+          aluno.setId(id);
+      }
+
+      return aluno;
   }
+
+
 }

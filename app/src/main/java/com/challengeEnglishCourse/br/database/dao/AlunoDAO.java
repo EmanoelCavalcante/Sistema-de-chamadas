@@ -11,9 +11,6 @@ import com.challengeEnglishCourse.br.database.DataBaseHelper;
 
 
 public class AlunoDAO extends BaseDAO {
-    private DataBaseHelper dbHelper;
-    private SQLiteDatabase db;
-
     public AlunoDAO(Context context){
         super(context);
     }
@@ -34,16 +31,15 @@ public class AlunoDAO extends BaseDAO {
         return aluno;
     }
 
-    public long inserirAlunos(Aluno aluno){
+    public long inserirAluno(Aluno aluno){
         ContentValues values = new ContentValues();
         values.put("nome", aluno.getNome());
 
         return db.insert("aluno", null, values);
     }
 
-    public List<Aluno> listarAlunos(){
+    public List<Aluno> listarAluno(){
         List<Aluno> alunos = new ArrayList<>();
-        Aluno aluno = new Aluno();
 
         Cursor cursor = null;
 
@@ -97,10 +93,10 @@ public class AlunoDAO extends BaseDAO {
         try{
             cursor = db.rawQuery(
 
-                    "SELECT * FROM aluno WHERE nome=? ", new String[]{nome}
+                    "SELECT * FROM aluno WHERE LOWER(REPLACE(nome, ' ', '')) = ? ", new String[]{nome}
             );
 
-            if (cursor != null && cursor.moveToFirst()){
+            if (cursor.moveToFirst()){
                 do{
 
                     alunos.add(cursorParaAluno(cursor));

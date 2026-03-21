@@ -15,10 +15,10 @@ public class AlunoRepository {
     }
 
     public long registrarAluno(Aluno aluno){
-      return alunoDAO.inserirAlunos(aluno);
+      return alunoDAO.inserirAluno(aluno);
     }
     public List<Aluno> listarAlunos(){
-       return alunoDAO.listarAlunos();
+       return alunoDAO.listarAluno();
     }
     
     public List<Aluno> buscarAlunoPeloNome(String nome){
