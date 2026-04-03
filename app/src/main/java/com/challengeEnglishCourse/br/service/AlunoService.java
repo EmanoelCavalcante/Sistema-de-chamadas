@@ -12,13 +12,23 @@ public class AlunoService{
     this.alunoDAO = alunoDAO;
   }
   
+  private String normalizarNome(String nome){
+    nome = nome.trim();
+    return nome.replaceAll(" +", " ");
+  }
+  
+  private void validarMatricula(long matricula){
+    if(matricula <= 0){
+      throw new RuntimeException("Matrícula inválida");
+    }
+  }
+  
   public Aluno registrarAluno(String nome){
       if(nome == null){
           throw new RuntimeException("Nome null");
       }
 
-      nome = nome.trim();
-      nome = nome.replaceAll(" +", " ");
+      nome = normalizarNome(nome);
 
       if(nome.isEmpty()){
           throw new IllegalArgumentException("Nome vazio!");
@@ -40,6 +50,45 @@ public class AlunoService{
 
       return aluno;
   }
-
-
+  
+  public List<Aluno> buscarPeloNome(String nome){
+    if(nome == null){
+      throw new IllegalArgumentException("Nome não pode ser null!");
+    }
+    nome = normalizarNome(nome);
+    
+    if(nome.isEmpty()){
+      throw new RuntimeException("Nome vazio!");
+    }
+    
+    List<Aluno> alunos = 
+    alunoDAO.buscarAlunoPeloNome(nome); 
+    
+    alunos.sort(Comparator.comparing(a -> a.getNome() == null ? "" : aluno.getNome().toLowerCase());
+    
+    if(alunos.isEmpty()){
+      throw new RuntimeException("Lista de alunos vazia!");
+    }
+    
+    return alunos;
+  }
+  
+  public Aluno buscarAlunoPorMatricula(long matricula){
+    validarMatricula(matricula);
+    Aluno aluno = alunoDAO.buscarAlunoPorMatricula(matricula);
+    
+    if(aluno == null{
+      throw new RuntimeException("Aluno não encontrado");
+    }
+    
+    return aluno;
+  }
+  
+  public boolean existeAlunoPorMatricula(long matricula){
+    validarMatricula(matricula);
+    
+    Aluno aluno = alunoDAO.buscarAlunoPorMatricula(matricula);
+    
+    return aluno != null;
+  }
 }
